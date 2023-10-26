@@ -13,7 +13,7 @@ import {
 } from "./forecasts-list/forecast.type";
 import { tap } from "rxjs/operators";
 
-export const DURATION_FOR_CACHE = 20 * 1000; // 1000 * 60 * 60 * 2
+export const DURATION_FOR_CACHE = 1000 * 60 * 60 * 2; // 2 hours
 @Injectable()
 export class WeatherService {
   static URL = "http://api.openweathermap.org/data/2.5";
