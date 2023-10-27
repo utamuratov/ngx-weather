@@ -31,10 +31,10 @@ export class CurrentConditionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadCurrentConditions();
+    this.listenLocationsChange();
   }
 
-  private loadCurrentConditions() {
+  private listenLocationsChange() {
     this.locationService.locations$
       .asObservable()
       .pipe(takeUntil(this.$destroy))
