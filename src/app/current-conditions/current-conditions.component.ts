@@ -6,6 +6,8 @@ import { ConditionsAndZip } from "../conditions-and-zip.type";
 import { NgDestroy } from "app/services/ng-destroy.service";
 import { takeUntil } from "rxjs/operators";
 
+const ACTIVE_TAB_INDEX = "activeTabIndex";
+
 @Component({
   selector: "app-current-conditions",
   templateUrl: "./current-conditions.component.html",
@@ -20,36 +22,16 @@ export class CurrentConditionsComponent implements OnInit {
     this.weatherService.getCurrentConditions();
   $destroy = inject(NgDestroy);
 
-  activeTabIndex = 0;
+  public get activeTabIndex(): number {
+    const activeTabIndex = +localStorage.getItem(ACTIVE_TAB_INDEX);
+    return activeTabIndex;
+  }
+  public set activeTabIndex(v: number) {
+    localStorage.setItem(ACTIVE_TAB_INDEX, v.toString());
+  }
 
   ngOnInit(): void {
     this.loadCurrentConditions();
-    this.addNewCurrentCondition();
-    this.removeAnyCurrentCondition();
-  }
-
-  private removeAnyCurrentCondition() {
-    this.locationService.removedLocation$
-      .asObservable()
-      .pipe(takeUntil(this.$destroy))
-      .subscribe((zipcode) => {
-        if (zipcode) {
-          this.weatherService.removeCurrentConditions(zipcode);
-          this.locationService.removedLocation$.next(null);
-        }
-      });
-  }
-
-  private addNewCurrentCondition() {
-    this.locationService.addedLocation$
-      .asObservable()
-      .pipe(takeUntil(this.$destroy))
-      .subscribe((zipcode) => {
-        if (zipcode) {
-          this.weatherService.addCurrentConditions(zipcode);
-          this.locationService.addedLocation$.next(null);
-        }
-      });
   }
 
   private loadCurrentConditions() {

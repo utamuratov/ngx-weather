@@ -5,28 +5,26 @@ export const LOCATIONS: string = "locations";
 
 @Injectable()
 export class LocationService {
-  private _locations: string[] = [];
-  public get locations(): string[] {
-    return this._locations;
-  }
-  public set locations(v: string[]) {
-    this._locations = v;
-    this.locations$.next(v);
-  }
-
+  locations: string[] = [];
   locations$ = new BehaviorSubject<string[]>(this.locations);
-  addedLocation$ = new BehaviorSubject<string | undefined>(undefined);
-  removedLocation$ = new BehaviorSubject<string | undefined>(undefined);
 
   constructor() {
     let locationsString = localStorage.getItem(LOCATIONS);
-    if (locationsString) this.locations = JSON.parse(locationsString);
+    if (locationsString) {
+      this.locations = JSON.parse(locationsString);
+      this.locations$.next(this.locations);
+    }
   }
 
   addLocation(zipcode: string) {
+    if (this.locations.indexOf(zipcode) !== -1) {
+      alert("Location already exists");
+      return;
+    }
+
     this.locations.push(zipcode);
     localStorage.setItem(LOCATIONS, JSON.stringify(this.locations));
-    this.addedLocation$.next(zipcode);
+    this.locations$.next(this.locations);
   }
 
   removeLocation(zipcode: string) {
@@ -34,7 +32,7 @@ export class LocationService {
     if (index !== -1) {
       this.locations.splice(index, 1);
       localStorage.setItem(LOCATIONS, JSON.stringify(this.locations));
-      this.removedLocation$.next(zipcode);
+      this.locations$.next(this.locations);
     }
   }
 }
