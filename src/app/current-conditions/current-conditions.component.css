@@ -1,36 +1,8 @@
-.close {
-  cursor: pointer;
-}
-
 .flex {
   display: flex;
   justify-content: space-between;
 }
 
-.nav-link.active {
-  border-color: #e4e4e4;
-  border-bottom: 0;
-}
-
-.nav-link .close {
-  margin-left: 5px;
-}
-
-.nav-item {
-  cursor: pointer;
-}
-
-.nav-tabs {
-  border: none;
-}
-
-.tab-set {
-  position: relative;
-}
-
-.tab-set .tab-item {
-  width: 100%;
-  padding: 20px;
-  border: 1px solid #ddd;
-  position: absolute;
+.well {
+  margin-bottom: 0;
 }

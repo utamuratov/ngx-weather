@@ -47,8 +47,8 @@ export class CurrentConditionsComponent implements OnInit {
     this.router.navigate(["/forecast", zipcode]);
   }
 
-  removeCondition(e: PointerEvent, zipcode: string, index: number) {
-    e.stopPropagation();
+  removeCondition(index: number) {
+    const zipcode = this.currentConditionsByZip()[index].zip;
     this.locationService.removeLocation(zipcode);
     if (index < this.activeTabIndex) this.activeTabIndex--;
     else if (index === this.activeTabIndex) this.activeTabIndex = 0;
