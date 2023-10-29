@@ -1,45 +1,41 @@
-<ul class="nav nav-tabs">
-  <li
-    class="nav-item"
-    *ngFor="let location of currentConditionsByZip(); index as i"
+<!-- AN EXAMPLE FOR USING GENERIC TAB -->
+<!-- <tab-set>
+  <tab [title]="titleTemplate"> Hello </tab>
+
+  <ng-template #titleTemplate><span>Yeap</span></ng-template>
+  <tab [title]="'Bye'"> Good bye </tab>
+</tab-set> -->
+
+<tab-set
+  [(activeTabIndex)]="activeTabIndex"
+  [closable]="true"
+  (closeTab)="removeCondition($event)"
+>
+  <tab
+    *ngFor="let location of currentConditionsByZip()"
+    [title]="location.data.name"
   >
-    <a
-      class="nav-link"
-      [ngClass]="{ active: i === activeTabIndex }"
-      aria-current="page"
-      (click)="activeTabIndex = i"
-      >{{ location.data.name }}
-      <span (click)="removeCondition($event, location.zip, i)" class="close"
-        >&times;</span
-      ></a
-    >
-  </li>
-</ul>
-<div class="tab-set">
-  <ng-container *ngFor="let location of currentConditionsByZip(); index as i">
-    <div class="tab-item" [hidden]="i !== activeTabIndex">
-      <div class="well flex" (click)="showForecast(location.zip)">
-        <div>
-          <h3>{{ location.data.name }} ({{ location.zip }})</h3>
-          <h4>Current conditions: {{ location.data.weather[0].main }}</h4>
-          <h4>Temperatures today:</h4>
-          <p>
-            Current {{ location.data.main.temp | number : ".0-0" }} - Max
-            {{ location.data.main.temp_max | number : ".0-0" }} - Min
-            {{ location.data.main.temp_min | number : ".0-0" }}
-          </p>
-          <p>
-            <a [routerLink]="['/forecast', location.zip]"
-              >Show 5-day forecast for {{ location.data.name }}</a
-            >
-          </p>
-        </div>
-        <div>
-          <img
-            [src]="weatherService.getWeatherIcon(location.data.weather[0].id)"
-          />
-        </div>
+    <div class="well flex" (click)="showForecast(location.zip)">
+      <div>
+        <h3>{{ location.data.name }} ({{ location.zip }})</h3>
+        <h4>Current conditions: {{ location.data.weather[0].main }}</h4>
+        <h4>Temperatures today:</h4>
+        <p>
+          Current {{ location.data.main.temp | number : ".0-0" }} - Max
+          {{ location.data.main.temp_max | number : ".0-0" }} - Min
+          {{ location.data.main.temp_min | number : ".0-0" }}
+        </p>
+        <p>
+          <a [routerLink]="['/forecast', location.zip]"
+            >Show 5-day forecast for {{ location.data.name }}</a
+          >
+        </p>
+      </div>
+      <div>
+        <img
+          [src]="weatherService.getWeatherIcon(location.data.weather[0].id)"
+        />
       </div>
     </div>
-  </ng-container>
-</div>
+  </tab>
+</tab-set>
