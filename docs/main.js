@@ -49,9 +49,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   AppModule: () => (/* binding */ AppModule)
 /* harmony export */ });
-/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/platform-browser */ 6480);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 1699);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/forms */ 8849);
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/platform-browser */ 6480);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 1699);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/forms */ 8849);
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./app.component */ 6401);
 /* harmony import */ var _zipcode_entry_zipcode_entry_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./zipcode-entry/zipcode-entry.component */ 1402);
 /* harmony import */ var _location_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./location.service */ 4056);
@@ -59,11 +59,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _weather_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./weather.service */ 8986);
 /* harmony import */ var _current_conditions_current_conditions_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./current-conditions/current-conditions.component */ 1217);
 /* harmony import */ var _main_page_main_page_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./main-page/main-page.component */ 1152);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/router */ 7947);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/router */ 7947);
 /* harmony import */ var _app_routing__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app.routing */ 34);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/common/http */ 4860);
-/* harmony import */ var _angular_service_worker__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/service-worker */ 1509);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/common/http */ 4860);
+/* harmony import */ var _angular_service_worker__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/service-worker */ 1509);
 /* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../environments/environment */ 553);
+/* harmony import */ var _shared_tab_set_tab_set_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./shared/tab-set/tab-set.module */ 1131);
 var __decorate = undefined && undefined.__decorate || function (decorators, target, key, desc) {
   var c = arguments.length,
     r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
@@ -86,10 +87,11 @@ var __decorate = undefined && undefined.__decorate || function (decorators, targ
 
 
 
+
 let AppModule = class AppModule {};
-AppModule = __decorate([(0,_angular_core__WEBPACK_IMPORTED_MODULE_9__.NgModule)({
+AppModule = __decorate([(0,_angular_core__WEBPACK_IMPORTED_MODULE_10__.NgModule)({
   declarations: [_app_component__WEBPACK_IMPORTED_MODULE_0__.AppComponent, _zipcode_entry_zipcode_entry_component__WEBPACK_IMPORTED_MODULE_1__.ZipcodeEntryComponent, _forecasts_list_forecasts_list_component__WEBPACK_IMPORTED_MODULE_3__.ForecastsListComponent, _current_conditions_current_conditions_component__WEBPACK_IMPORTED_MODULE_5__.CurrentConditionsComponent, _main_page_main_page_component__WEBPACK_IMPORTED_MODULE_6__.MainPageComponent],
-  imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_10__.BrowserModule, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormsModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_12__.HttpClientModule, _angular_router__WEBPACK_IMPORTED_MODULE_13__.RouterModule, _app_routing__WEBPACK_IMPORTED_MODULE_7__.routing, _angular_service_worker__WEBPACK_IMPORTED_MODULE_14__.ServiceWorkerModule.register('/ngsw-worker.js', {
+  imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_11__.BrowserModule, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormsModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_13__.HttpClientModule, _angular_router__WEBPACK_IMPORTED_MODULE_14__.RouterModule, _shared_tab_set_tab_set_module__WEBPACK_IMPORTED_MODULE_9__.TabSetModule, _app_routing__WEBPACK_IMPORTED_MODULE_7__.routing, _angular_service_worker__WEBPACK_IMPORTED_MODULE_15__.ServiceWorkerModule.register("/ngsw-worker.js", {
     enabled: _environments_environment__WEBPACK_IMPORTED_MODULE_8__.environment.production
   })],
   providers: [_location_service__WEBPACK_IMPORTED_MODULE_2__.LocationService, _weather_service__WEBPACK_IMPORTED_MODULE_4__.WeatherService],
@@ -189,8 +191,8 @@ let CurrentConditionsComponent = class CurrentConditionsComponent {
   showForecast(zipcode) {
     this.router.navigate(["/forecast", zipcode]);
   }
-  removeCondition(e, zipcode, index) {
-    e.stopPropagation();
+  removeCondition(index) {
+    const zipcode = this.currentConditionsByZip()[index].zip;
     this.locationService.removeLocation(zipcode);
     if (index < this.activeTabIndex) this.activeTabIndex--;else if (index === this.activeTabIndex) this.activeTabIndex = 0;
   }
@@ -375,6 +377,168 @@ let NgDestroy = class NgDestroy extends rxjs__WEBPACK_IMPORTED_MODULE_0__.Subjec
   }
 };
 NgDestroy = __decorate([(0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.Injectable)()], NgDestroy);
+
+
+/***/ }),
+
+/***/ 2761:
+/*!*****************************************************!*\
+  !*** ./src/app/shared/tab-set/tab-set.component.ts ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   TabSetComponent: () => (/* binding */ TabSetComponent)
+/* harmony export */ });
+/* harmony import */ var _tab_set_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tab-set.component.html?ngResource */ 8677);
+/* harmony import */ var E_Projects_ForFuture_ng_weather_src_app_shared_tab_set_tab_set_component_ts_css_ngResource_E_Projects_ForFuture_ng_weather_node_modules_ngtools_webpack_src_loaders_inline_resource_js_data_CiAgICAgIC5uYXYtbGluay5hY3RpdmUgewogICAgICAgIGJvcmRlci1jb2xvcjogI2U0ZTRlNDsKICAgICAgICBib3JkZXItYm90dG9tOiAwOwogICAgICB9CgogICAgICAubmF2LWxpbmsgLmNsb3NlIHsKICAgICAgICBtYXJnaW4tbGVmdDogNXB4OwogICAgICB9CgogICAgICAubmF2LWl0ZW0gewogICAgICAgIGN1cnNvcjogcG9pbnRlcjsKICAgICAgfQoKICAgICAgLm5hdi10YWJzIHsKICAgICAgICBib3JkZXI6IG5vbmU7CiAgICAgIH0KCiAgICAgIC50YWItc2V0IHsKICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7CiAgICAgIH0KICAgIA_3D_3D_E_Projects_ForFuture_ng_weather_src_app_shared_tab_set_tab_set_component_ts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/app/shared/tab-set/tab-set.component.ts.css?ngResource!=!./node_modules/@ngtools/webpack/src/loaders/inline-resource.js?data=CiAgICAgIC5uYXYtbGluay5hY3RpdmUgewogICAgICAgIGJvcmRlci1jb2xvcjogI2U0ZTRlNDsKICAgICAgICBib3JkZXItYm90dG9tOiAwOwogICAgICB9CgogICAgICAubmF2LWxpbmsgLmNsb3NlIHsKICAgICAgICBtYXJnaW4tbGVmdDogNXB4OwogICAgICB9CgogICAgICAubmF2LWl0ZW0gewogICAgICAgIGN1cnNvcjogcG9pbnRlcjsKICAgICAgfQoKICAgICAgLm5hdi10YWJzIHsKICAgICAgICBib3JkZXI6IG5vbmU7CiAgICAgIH0KCiAgICAgIC50YWItc2V0IHsKICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7CiAgICAgIH0KICAgIA%3D%3D!./src/app/shared/tab-set/tab-set.component.ts */ 2586);
+/* harmony import */ var E_Projects_ForFuture_ng_weather_src_app_shared_tab_set_tab_set_component_ts_css_ngResource_E_Projects_ForFuture_ng_weather_node_modules_ngtools_webpack_src_loaders_inline_resource_js_data_CiAgICAgIC5uYXYtbGluay5hY3RpdmUgewogICAgICAgIGJvcmRlci1jb2xvcjogI2U0ZTRlNDsKICAgICAgICBib3JkZXItYm90dG9tOiAwOwogICAgICB9CgogICAgICAubmF2LWxpbmsgLmNsb3NlIHsKICAgICAgICBtYXJnaW4tbGVmdDogNXB4OwogICAgICB9CgogICAgICAubmF2LWl0ZW0gewogICAgICAgIGN1cnNvcjogcG9pbnRlcjsKICAgICAgfQoKICAgICAgLm5hdi10YWJzIHsKICAgICAgICBib3JkZXI6IG5vbmU7CiAgICAgIH0KCiAgICAgIC50YWItc2V0IHsKICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7CiAgICAgIH0KICAgIA_3D_3D_E_Projects_ForFuture_ng_weather_src_app_shared_tab_set_tab_set_component_ts__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(E_Projects_ForFuture_ng_weather_src_app_shared_tab_set_tab_set_component_ts_css_ngResource_E_Projects_ForFuture_ng_weather_node_modules_ngtools_webpack_src_loaders_inline_resource_js_data_CiAgICAgIC5uYXYtbGluay5hY3RpdmUgewogICAgICAgIGJvcmRlci1jb2xvcjogI2U0ZTRlNDsKICAgICAgICBib3JkZXItYm90dG9tOiAwOwogICAgICB9CgogICAgICAubmF2LWxpbmsgLmNsb3NlIHsKICAgICAgICBtYXJnaW4tbGVmdDogNXB4OwogICAgICB9CgogICAgICAubmF2LWl0ZW0gewogICAgICAgIGN1cnNvcjogcG9pbnRlcjsKICAgICAgfQoKICAgICAgLm5hdi10YWJzIHsKICAgICAgICBib3JkZXI6IG5vbmU7CiAgICAgIH0KCiAgICAgIC50YWItc2V0IHsKICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7CiAgICAgIH0KICAgIA_3D_3D_E_Projects_ForFuture_ng_weather_src_app_shared_tab_set_tab_set_component_ts__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 1699);
+/* harmony import */ var _tab_tab_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tab/tab.component */ 3037);
+var _class;
+var __decorate = undefined && undefined.__decorate || function (decorators, target, key, desc) {
+  var c = arguments.length,
+    r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+    d;
+  if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+  return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+let TabSetComponent = (_class = class TabSetComponent {
+  constructor() {
+    this.closable = false;
+    this.activeTabIndex = 0;
+    this.activeTabIndexChange = new _angular_core__WEBPACK_IMPORTED_MODULE_3__.EventEmitter();
+    this.closeTab = new _angular_core__WEBPACK_IMPORTED_MODULE_3__.EventEmitter();
+  }
+  get titles() {
+    return this.tabs.map(tab => tab.title);
+  }
+  treatActiveTab() {
+    this.tabs?.forEach((tab, index) => {
+      if (index === this.activeTabIndex) tab.elementRef.nativeElement.style.display = "block";else tab.elementRef.nativeElement.style.display = "none";
+    });
+  }
+  chooseTab(index) {
+    this.activeTabIndex = index;
+    this.activeTabIndexChange.emit(index);
+  }
+  close(e, index) {
+    e.stopPropagation();
+    this.closeTab.emit(index);
+  }
+  isTitleString(title) {
+    return typeof title === "string";
+  }
+  ngAfterContentChecked() {
+    this.treatActiveTab();
+  }
+}, _class.propDecorators = {
+  closable: [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Input
+  }],
+  activeTabIndex: [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Input
+  }],
+  activeTabIndexChange: [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Output
+  }],
+  closeTab: [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Output
+  }],
+  tabs: [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.ContentChildren,
+    args: [_tab_tab_component__WEBPACK_IMPORTED_MODULE_2__.TabDirective]
+  }]
+}, _class);
+TabSetComponent = __decorate([(0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Component)({
+  selector: "tab-set",
+  template: _tab_set_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
+  styles: [(E_Projects_ForFuture_ng_weather_src_app_shared_tab_set_tab_set_component_ts_css_ngResource_E_Projects_ForFuture_ng_weather_node_modules_ngtools_webpack_src_loaders_inline_resource_js_data_CiAgICAgIC5uYXYtbGluay5hY3RpdmUgewogICAgICAgIGJvcmRlci1jb2xvcjogI2U0ZTRlNDsKICAgICAgICBib3JkZXItYm90dG9tOiAwOwogICAgICB9CgogICAgICAubmF2LWxpbmsgLmNsb3NlIHsKICAgICAgICBtYXJnaW4tbGVmdDogNXB4OwogICAgICB9CgogICAgICAubmF2LWl0ZW0gewogICAgICAgIGN1cnNvcjogcG9pbnRlcjsKICAgICAgfQoKICAgICAgLm5hdi10YWJzIHsKICAgICAgICBib3JkZXI6IG5vbmU7CiAgICAgIH0KCiAgICAgIC50YWItc2V0IHsKICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7CiAgICAgIH0KICAgIA_3D_3D_E_Projects_ForFuture_ng_weather_src_app_shared_tab_set_tab_set_component_ts__WEBPACK_IMPORTED_MODULE_1___default())]
+})], TabSetComponent);
+
+
+/***/ }),
+
+/***/ 1131:
+/*!**************************************************!*\
+  !*** ./src/app/shared/tab-set/tab-set.module.ts ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   TabSetModule: () => (/* binding */ TabSetModule)
+/* harmony export */ });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 1699);
+/* harmony import */ var _tab_set_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tab-set.component */ 2761);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ 6575);
+/* harmony import */ var _tab_tab_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tab/tab.component */ 3037);
+var __decorate = undefined && undefined.__decorate || function (decorators, target, key, desc) {
+  var c = arguments.length,
+    r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+    d;
+  if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+  return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+let TabSetModule = class TabSetModule {};
+TabSetModule = __decorate([(0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.NgModule)({
+  imports: [_angular_common__WEBPACK_IMPORTED_MODULE_3__.CommonModule],
+  exports: [_tab_set_component__WEBPACK_IMPORTED_MODULE_0__.TabSetComponent, _tab_tab_component__WEBPACK_IMPORTED_MODULE_1__.TabDirective],
+  declarations: [_tab_set_component__WEBPACK_IMPORTED_MODULE_0__.TabSetComponent, _tab_tab_component__WEBPACK_IMPORTED_MODULE_1__.TabDirective],
+  providers: []
+})], TabSetModule);
+
+
+/***/ }),
+
+/***/ 3037:
+/*!*****************************************************!*\
+  !*** ./src/app/shared/tab-set/tab/tab.component.ts ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   TabDirective: () => (/* binding */ TabDirective)
+/* harmony export */ });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ 1699);
+var _class;
+var __decorate = undefined && undefined.__decorate || function (decorators, target, key, desc) {
+  var c = arguments.length,
+    r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+    d;
+  if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+  return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+let TabDirective = (_class = class TabDirective {
+  constructor(elementRef) {
+    this.elementRef = elementRef;
+    elementRef.nativeElement.style.border = "1px solid #ddd";
+    elementRef.nativeElement.style.padding = "20px";
+  }
+}, _class.ctorParameters = () => [{
+  type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.ElementRef
+}], _class.propDecorators = {
+  title: [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input
+  }]
+}, _class);
+TabDirective = __decorate([(0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.Directive)({
+  selector: "tab"
+})], TabDirective);
 
 
 /***/ }),
@@ -586,6 +750,45 @@ if (_environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.productio
 
 /***/ }),
 
+/***/ 2586:
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./src/app/shared/tab-set/tab-set.component.ts.css?ngResource!=!./node_modules/@ngtools/webpack/src/loaders/inline-resource.js?data=CiAgICAgIC5uYXYtbGluay5hY3RpdmUgewogICAgICAgIGJvcmRlci1jb2xvcjogI2U0ZTRlNDsKICAgICAgICBib3JkZXItYm90dG9tOiAwOwogICAgICB9CgogICAgICAubmF2LWxpbmsgLmNsb3NlIHsKICAgICAgICBtYXJnaW4tbGVmdDogNXB4OwogICAgICB9CgogICAgICAubmF2LWl0ZW0gewogICAgICAgIGN1cnNvcjogcG9pbnRlcjsKICAgICAgfQoKICAgICAgLm5hdi10YWJzIHsKICAgICAgICBib3JkZXI6IG5vbmU7CiAgICAgIH0KCiAgICAgIC50YWItc2V0IHsKICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7CiAgICAgIH0KICAgIA%3D%3D!./src/app/shared/tab-set/tab-set.component.ts ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+// Imports
+var ___CSS_LOADER_API_SOURCEMAP_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ 2487);
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ 1386);
+var ___CSS_LOADER_EXPORT___ = ___CSS_LOADER_API_IMPORT___(___CSS_LOADER_API_SOURCEMAP_IMPORT___);
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `
+      .nav-link.active {
+        border-color: #e4e4e4;
+        border-bottom: 0;
+      }
+
+      .nav-link .close {
+        margin-left: 5px;
+      }
+
+      .nav-item {
+        cursor: pointer;
+      }
+
+      .nav-tabs {
+        border: none;
+      }
+
+      .tab-set {
+        position: relative;
+      }
+    `, "",{"version":3,"sources":["webpack://./src/app/shared/tab-set/tab-set.component.ts"],"names":[],"mappings":";MACM;QACE,qBAAqB;QACrB,gBAAgB;MAClB;;MAEA;QACE,gBAAgB;MAClB;;MAEA;QACE,eAAe;MACjB;;MAEA;QACE,YAAY;MACd;;MAEA;QACE,kBAAkB;MACpB","sourcesContent":["\n      .nav-link.active {\n        border-color: #e4e4e4;\n        border-bottom: 0;\n      }\n\n      .nav-link .close {\n        margin-left: 5px;\n      }\n\n      .nav-item {\n        cursor: pointer;\n      }\n\n      .nav-tabs {\n        border: none;\n      }\n\n      .tab-set {\n        position: relative;\n      }\n    "],"sourceRoot":""}]);
+// Exports
+module.exports = ___CSS_LOADER_EXPORT___.toString();
+
+
+/***/ }),
+
 /***/ 6715:
 /*!**********************************************!*\
   !*** ./src/app/app.component.css?ngResource ***!
@@ -615,42 +818,14 @@ var ___CSS_LOADER_API_SOURCEMAP_IMPORT___ = __webpack_require__(/*! ../../../nod
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ 1386);
 var ___CSS_LOADER_EXPORT___ = ___CSS_LOADER_API_IMPORT___(___CSS_LOADER_API_SOURCEMAP_IMPORT___);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `.close {
-  cursor: pointer;
-}
-
-.flex {
+___CSS_LOADER_EXPORT___.push([module.id, `.flex {
   display: flex;
   justify-content: space-between;
 }
 
-.nav-link.active {
-  border-color: #e4e4e4;
-  border-bottom: 0;
-}
-
-.nav-link .close {
-  margin-left: 5px;
-}
-
-.nav-item {
-  cursor: pointer;
-}
-
-.nav-tabs {
-  border: none;
-}
-
-.tab-set {
-  position: relative;
-}
-
-.tab-set .tab-item {
-  width: 100%;
-  padding: 20px;
-  border: 1px solid #ddd;
-  position: absolute;
-}`, "",{"version":3,"sources":["webpack://./src/app/current-conditions/current-conditions.component.css"],"names":[],"mappings":"AAAA;EACE,eAAe;AACjB;;AAEA;EACE,aAAa;EACb,8BAA8B;AAChC;;AAEA;EACE,qBAAqB;EACrB,gBAAgB;AAClB;;AAEA;EACE,gBAAgB;AAClB;;AAEA;EACE,eAAe;AACjB;;AAEA;EACE,YAAY;AACd;;AAEA;EACE,kBAAkB;AACpB;;AAEA;EACE,WAAW;EACX,aAAa;EACb,sBAAsB;EACtB,kBAAkB;AACpB","sourcesContent":[".close {\r\n  cursor: pointer;\r\n}\r\n\r\n.flex {\r\n  display: flex;\r\n  justify-content: space-between;\r\n}\r\n\r\n.nav-link.active {\r\n  border-color: #e4e4e4;\r\n  border-bottom: 0;\r\n}\r\n\r\n.nav-link .close {\r\n  margin-left: 5px;\r\n}\r\n\r\n.nav-item {\r\n  cursor: pointer;\r\n}\r\n\r\n.nav-tabs {\r\n  border: none;\r\n}\r\n\r\n.tab-set {\r\n  position: relative;\r\n}\r\n\r\n.tab-set .tab-item {\r\n  width: 100%;\r\n  padding: 20px;\r\n  border: 1px solid #ddd;\r\n  position: absolute;\r\n}"],"sourceRoot":""}]);
+.well {
+  margin-bottom: 0;
+}`, "",{"version":3,"sources":["webpack://./src/app/current-conditions/current-conditions.component.css"],"names":[],"mappings":"AAAA;EACE,aAAa;EACb,8BAA8B;AAChC;;AAEA;EACE,gBAAgB;AAClB","sourcesContent":[".flex {\r\n  display: flex;\r\n  justify-content: space-between;\r\n}\r\n\r\n.well {\r\n  margin-bottom: 0;\r\n}"],"sourceRoot":""}]);
 // Exports
 module.exports = ___CSS_LOADER_EXPORT___.toString();
 
@@ -700,7 +875,7 @@ module.exports = "<router-outlet></router-outlet>\r\n";
 /***/ ((module) => {
 
 "use strict";
-module.exports = "<ul class=\"nav nav-tabs\">\r\n  <li\r\n    class=\"nav-item\"\r\n    *ngFor=\"let location of currentConditionsByZip(); index as i\"\r\n  >\r\n    <a\r\n      class=\"nav-link\"\r\n      [ngClass]=\"{ active: i === activeTabIndex }\"\r\n      aria-current=\"page\"\r\n      (click)=\"activeTabIndex = i\"\r\n      >{{ location.data.name }}\r\n      <span (click)=\"removeCondition($event, location.zip, i)\" class=\"close\"\r\n        >&times;</span\r\n      ></a\r\n    >\r\n  </li>\r\n</ul>\r\n<div class=\"tab-set\">\r\n  <ng-container *ngFor=\"let location of currentConditionsByZip(); index as i\">\r\n    <div class=\"tab-item\" [hidden]=\"i !== activeTabIndex\">\r\n      <div class=\"well flex\" (click)=\"showForecast(location.zip)\">\r\n        <div>\r\n          <h3>{{ location.data.name }} ({{ location.zip }})</h3>\r\n          <h4>Current conditions: {{ location.data.weather[0].main }}</h4>\r\n          <h4>Temperatures today:</h4>\r\n          <p>\r\n            Current {{ location.data.main.temp | number : \".0-0\" }} - Max\r\n            {{ location.data.main.temp_max | number : \".0-0\" }} - Min\r\n            {{ location.data.main.temp_min | number : \".0-0\" }}\r\n          </p>\r\n          <p>\r\n            <a [routerLink]=\"['/forecast', location.zip]\"\r\n              >Show 5-day forecast for {{ location.data.name }}</a\r\n            >\r\n          </p>\r\n        </div>\r\n        <div>\r\n          <img\r\n            [src]=\"weatherService.getWeatherIcon(location.data.weather[0].id)\"\r\n          />\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </ng-container>\r\n</div>\r\n";
+module.exports = "<!-- AN EXAMPLE FOR USING GENERIC TAB -->\r\n<!-- <tab-set>\r\n  <tab [title]=\"titleTemplate\"> Hello </tab>\r\n\r\n  <ng-template #titleTemplate><span>Yeap</span></ng-template>\r\n  <tab [title]=\"'Bye'\"> Good bye </tab>\r\n</tab-set> -->\r\n\r\n<tab-set\r\n  [(activeTabIndex)]=\"activeTabIndex\"\r\n  [closable]=\"true\"\r\n  (closeTab)=\"removeCondition($event)\"\r\n>\r\n  <tab\r\n    *ngFor=\"let location of currentConditionsByZip()\"\r\n    [title]=\"location.data.name\"\r\n  >\r\n    <div class=\"well flex\" (click)=\"showForecast(location.zip)\">\r\n      <div>\r\n        <h3>{{ location.data.name }} ({{ location.zip }})</h3>\r\n        <h4>Current conditions: {{ location.data.weather[0].main }}</h4>\r\n        <h4>Temperatures today:</h4>\r\n        <p>\r\n          Current {{ location.data.main.temp | number : \".0-0\" }} - Max\r\n          {{ location.data.main.temp_max | number : \".0-0\" }} - Min\r\n          {{ location.data.main.temp_min | number : \".0-0\" }}\r\n        </p>\r\n        <p>\r\n          <a [routerLink]=\"['/forecast', location.zip]\"\r\n            >Show 5-day forecast for {{ location.data.name }}</a\r\n          >\r\n        </p>\r\n      </div>\r\n      <div>\r\n        <img\r\n          [src]=\"weatherService.getWeatherIcon(location.data.weather[0].id)\"\r\n        />\r\n      </div>\r\n    </div>\r\n  </tab>\r\n</tab-set>\r\n";
 
 /***/ }),
 
@@ -723,6 +898,17 @@ module.exports = "<div>\r\n  <div class=\"panel panel-default\">\r\n    <div cla
 
 "use strict";
 module.exports = "<div class=\"container-fluid\">\r\n\r\n  <app-zipcode-entry> </app-zipcode-entry>\r\n  <app-current-conditions></app-current-conditions>\r\n\r\n</div>\r\n";
+
+/***/ }),
+
+/***/ 8677:
+/*!******************************************************************!*\
+  !*** ./src/app/shared/tab-set/tab-set.component.html?ngResource ***!
+  \******************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = "<ul class=\"nav nav-tabs\">\r\n  <li class=\"nav-item\" *ngFor=\"let title of titles; index as i\">\r\n    <a\r\n      class=\"nav-link\"\r\n      [ngClass]=\"{ active: i === activeTabIndex }\"\r\n      aria-current=\"page\"\r\n      (click)=\"chooseTab(i)\"\r\n    >\r\n      <ng-container *ngIf=\"isTitleString(title); else template\">\r\n        {{ title }}\r\n      </ng-container>\r\n      <ng-template #template>\r\n        <ng-containter [ngTemplateOutlet]=\"title\"></ng-containter>\r\n      </ng-template>\r\n      <span *ngIf=\"closable\" (click)=\"close($event, i)\" class=\"close\"\r\n        >&times;</span\r\n      ></a\r\n    >\r\n  </li>\r\n</ul>\r\n<div class=\"tab-set\">\r\n  <ng-content></ng-content>\r\n</div>\r\n";
 
 /***/ }),
 
