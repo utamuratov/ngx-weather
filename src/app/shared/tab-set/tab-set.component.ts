@@ -12,7 +12,7 @@ import {
   QueryList,
   TemplateRef,
 } from "@angular/core";
-import { TabDirective } from "./tab/tab.component";
+import { TabDirective } from "./tab/tab.directive";
 
 @Component({
   selector: "tab-set",
